@@ -180,6 +180,7 @@ export default function createListComponent({
     }
 
     render() {
+      //console.log("rendermethodcalled");
       const {
         children,
         className,
@@ -264,7 +265,12 @@ export default function createListComponent({
 
     onHeightChange = ({ index, newHeight }) => {
       onItemSizeChange(index, newHeight, this._instanceProps);
-      console.log(index, newHeight);
+      //console.log(index, newHeight);
+      this.setState((prevState) => {
+        return {
+          scrollUpdateWasRequested: true,
+        };
+      }, this.forceUpdate);
     };
 
     _callOnItemsRendered = memoizeOne(
@@ -335,7 +341,7 @@ export default function createListComponent({
       );
 
       let style;
-      if (itemStyleCache.hasOwnProperty(index)) {
+      if (false && itemStyleCache.hasOwnProperty(index)) {
         style = itemStyleCache[index];
       } else {
         const offset = getItemOffset(this.props, index, this._instanceProps);
